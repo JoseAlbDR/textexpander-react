@@ -25,7 +25,16 @@ export default function App() {
         foot on the moon or when rovers were sent to roam around on Mars.
       </TextExpander>
 
-      <TextExpander expanded={true} className="box">
+      <TextExpander
+        expanded={true}
+        className="box"
+        textFontFamily="comic sans"
+        btnFontFamily="Courier New"
+        textSize="50px"
+        btnTextSize="70px"
+        textClassName="text"
+        btnClassName="btn"
+      >
         Space missions have given us incredible insights into our universe and
         have inspired future generations to keep reaching for the stars. Space
         travel is a pretty cool thing to think about. Who knows what we'll
@@ -42,6 +51,12 @@ function TextExpander({
   buttonColor = "blue",
   expanded = false,
   className = "",
+  textSize = "inherit",
+  textFontFamily = "inherit",
+  textClassName = "",
+  btnTextSize = "15px",
+  btnFontFamily = "inherit",
+  btnClassName = "",
   children,
 }) {
   const [expand, setExpand] = useState(expanded);
@@ -51,23 +66,32 @@ function TextExpander({
     color: buttonColor,
     backgroundColor: "inherit",
     cursor: "pointer",
-    fontSize: "15px",
+    fontSize: btnTextSize,
+    fontFamily: btnFontFamily,
     fontWeight: "700",
+  };
+
+  const textStyle = {
+    fontSize: textSize,
+    fontFamily: textFontFamily,
   };
 
   return (
     <div className={className}>
-      {expand
-        ? `${children} `
-        : `${children.split(" ").slice(0, collapsedNumWords).join(" ")}...`}
-      <span>
-        <button
-          onClick={() => setExpand((expand) => !expand)}
-          style={buttonStyle}
-        >
-          {!expand ? expandButtonText : collapseButtonText}
-        </button>
-      </span>
+      <p style={textStyle} className={textClassName}>
+        {expand
+          ? `${children} `
+          : `${children.split(" ").slice(0, collapsedNumWords).join(" ")}...`}
+        <span>
+          <button
+            onClick={() => setExpand((expand) => !expand)}
+            style={buttonStyle}
+            className={btnClassName}
+          >
+            {!expand ? expandButtonText : collapseButtonText}
+          </button>
+        </span>
+      </p>
     </div>
   );
 }
